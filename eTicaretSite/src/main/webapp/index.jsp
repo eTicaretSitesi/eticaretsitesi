@@ -41,13 +41,13 @@
                 <a class="nav-link" href="#home">Anasayfa</a>
               </li>
               <li class="nav-item me-2">
-                <a class="nav-link" href="#">Sepet ( )</a>
+                <a class="nav-link" href="cart.jsp">Sepet ( )</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/register.html">Üye Ol</a>
+                <a class="nav-link" href="register.jsp">Üye Ol</a>
               </li>
               <li class="nav-item me-4">
-                <a class="nav-link" href="/login.html">Giriş Yap</a>
+                <a class="nav-link" href="login.jsp">Giriş Yap</a>
               </li>
             </ul>
           </div>
@@ -106,7 +106,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -127,7 +127,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -140,7 +140,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -153,7 +153,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -166,7 +166,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -179,7 +179,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -192,7 +192,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -205,7 +205,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>
@@ -218,7 +218,7 @@
 
               <div class="col-md-4">
                 <div class="card">
-                  <img src="/img/tel.png" class="card-img-top" alt="Ürün 1">
+                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
                   <div class="card-body">
                     <h5 class="card-title">Xiaomi Telefon</h5>
                     <p class="card-text">Xiaomi markadır.</p>

@@ -32,16 +32,16 @@
           <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item mx-2">
-                <a class="nav-link" href="/index.html">Anasayfa</a>
+                <a class="nav-link" href="index.jsp">Anasayfa</a>
               </li>
               <li class="nav-item me-2">
-                <a class="nav-link" href="#">Sepet ( )</a>
+                <a class="nav-link" href="cart.jsp">Sepet ( )</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#register">Üye Ol</a>
               </li>
               <li class="nav-item me-4">
-                <a class="nav-link" href="/login.html">Giriş Yap</a>
+                <a class="nav-link" href="login.jsp">Giriş Yap</a>
               </li>
             </ul>
           </div>
@@ -57,27 +57,27 @@
           <div class="col-md-12">
             <div class="register-container">
               <h3 class="text-center mb-4">Üye Ol</h3>
-              <form>
+              <form action="Register" method="post">
                 <div class="mb-3">
                   <label for="firstName" class="form-label">Ad</label>
-                  <input type="text" class="form-control" id="firstName" required>
+                  <input type="text" class="form-control" id="firstName" name="firstName" required>
                 </div>
                 <div class="mb-3">
                   <label for="lastName" class="form-label">Soyad</label>
-                  <input type="text" class="form-control" id="lastName" required>
+                  <input type="text" class="form-control" id="lastName" name="lastName" required>
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">E-posta</label>
-                  <input type="email" class="form-control" id="email" required>
+                  <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Şifre</label>
-                  <input type="password" class="form-control" id="password" required>
+                  <input type="password" class="form-control" id="password" name="password"  required>
                 </div>
                 <button type="submit" class="btn btn-success">Üye Ol</button>
               </form>
               <div class="text-center mt-3">
-                <p>Zaten üye misin? <a href="/login.html" style="text-decoration: none; color: darkgreen;">Giriş yap</a></p>
+                <p>Zaten üye misin? <a href="login.jsp" style="text-decoration: none; color: darkgreen;">Giriş yap</a></p>
               </div>
             </div>
           </div>

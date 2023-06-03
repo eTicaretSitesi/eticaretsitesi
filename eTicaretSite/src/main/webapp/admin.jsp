@@ -22,10 +22,10 @@
           <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item mx-2">
-                <a class="nav-link" href="/index.html">Anasayfa</a>
+                <a class="nav-link" href="index.jsp">Anasayfa</a>
               </li>
               <li class="nav-item me-2">
-                <a class="nav-link" href="#">Çıkış Yap</a>
+                <a class="nav-link" href="login.jsp">Çıkış Yap</a>
             </ul>
           </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="row mt-5">
           <div class="col-md-4">
             <div class="card text-center">
-                <img src="/img/users.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
+                <img src="img/users.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Kullanıcı Sayısı</h5>
                 <p class="card-text">100</p>
@@ -52,7 +52,7 @@
           </div>
           <div class="col-md-4">
             <div class="card text-center">
-                <img src="/eTicaretSite/img/category.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
+                <img src="img/category.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Kategori Sayısı</h5>
                 <p class="card-text">50</p>
@@ -61,7 +61,7 @@
           </div>
           <div class="col-md-4">
             <div class="card text-center">
-                <img src="/img/product.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
+                <img src="img/product.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Ürün Sayısı</h5>
                 <p class="card-text">200</p>
@@ -72,7 +72,7 @@
         <div class="row mt-5">
           <div class="col-md-6">
             <div class="card text-center">
-                <img src="/img/catadd.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
+                <img src="img/catadd.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Kategori</h5>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#kategoriModal">
@@ -83,7 +83,7 @@
           </div>
           <div class="col-md-6">
             <div class="card text-center">
-                <img src="/img/add.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
+                <img src="img/add.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Ürün</h5>
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#urunModal">
@@ -107,7 +107,7 @@
               <form>
                 <div class="mb-3">
                   <label for="kategoriAdi" class="form-label">Kategori Adı</label>
-                  <input type="text" class="form-control" id="kategoriAdi" placeholder="Kategori adını girin">
+                  <input type="text" class="form-control" id="kategoriAdi" name="kategoriAdi" placeholder="Kategori adını girin">
                 </div>
               </form>
             </div>
@@ -120,57 +120,75 @@
       </div>
     
       <!-- Ürün Ekle Modal -->
-      <div class="modal fade" id="urunModal" tabindex="-1" aria-labelledby="urunModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="urunModalLabel">Ürün Ekle</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label for="urunAdi" class="form-label">Ürün İsmi</label>
-                  <input type="text" class="form-control" id="urunAdi" placeholder="Ürün ismini girin">
-                </div>
-                <div class="mb-3">
-                  <label for="urunAciklamasi" class="form-label">Açıklama</label>
-                  <textarea class="form-control" id="urunAciklamasi" placeholder="Ürün açıklamasını girin"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="urunFiyati" class="form-label">Fiyat</label>
-                  <input type="number" class="form-control" id="urunFiyati" placeholder="Ürün fiyatını girin">
-                </div>
-                <div class="mb-3">
-                  <label for="urunStokMiktari" class="form-label">Stok Miktarı</label>
-                  <input type="number" class="form-control" id="urunStokMiktari" placeholder="Ürün stok miktarını girin">
-                </div>
-                <div class="mb-3">
-                  <label for="kategoriSecimi" class="form-label">Kategori Seçimi</label>
-                  <select class="form-select" id="kategoriSecimi">
-                    <option value="1">Kategori 1</option>
-                    <option value="2">Kategori 2</option>
-                    <option value="3">Kategori 3</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="fotoYukleme" class="form-label">Fotoğraf Yükleme</label>
-                  <input type="file" class="form-control" id="fotoYukleme">
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success">Ekle</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-            </div>
-          </div>
-        </div>
-      </div>
+	<div class="modal fade" id="urunModal" tabindex="-1" aria-labelledby="urunModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="urunModalLabel">Ürün Ekle</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <form action="UrunEkle" method="post">
+	          <div class="mb-3">
+	            <label for="urunAdi" class="form-label">Ürün İsmi</label>
+	            <input type="text" class="form-control" id="urunAdi" name="urunAdi" placeholder="Ürün ismini girin">
+	          </div>
+	          <div class="mb-3">
+	            <label for="urunAciklamasi" class="form-label">Açıklama</label>
+	            <textarea class="form-control" id="urunAciklamasi" name="urunAciklamasi" placeholder="Ürün açıklamasını girin"></textarea>
+	          </div>
+	          <div class="mb-3">
+	            <label for="urunFiyati" class="form-label">Fiyat</label>
+	            <input type="number" class="form-control" id="urunFiyati" name="urunFiyati" placeholder="Ürün fiyatını girin">
+	          </div>
+	          <div class="mb-3">
+	            <label for="urunStokMiktari" class="form-label">Stok Miktarı</label>
+	            <input type="number" class="form-control" id="urunStokMiktari" name="urunStokMiktari" placeholder="Ürün stok miktarını girin">
+	          </div>
+	          <div class="mb-3">
+	            <label for="kategoriSecimi" class="form-label">Kategori Seçimi</label>
+	            <select class="form-select" id="kategoriSecimi" name="kategoriSecimi"></select>
+	          </div>
+	          <div class="mb-3">
+	            <label for="fotoYukleme" class="form-label">Fotoğraf Yükleme</label>
+	            <input type="file" class="form-control" id="fotoYukleme" name="fotoYukleme">
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	          <button type="button" class="btn btn-success">Ekle</button>
+	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
   </section>
 
   <!-- Bitiş -->
+  <script>
+  document.querySelector("#kategoriModal button.btn-success").addEventListener("click", function() {
+    var kategoriAdi = document.getElementById("kategoriAdi").value;
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    // AJAX isteği için XMLHttpRequest nesnesi oluştur
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "KategoriEkle", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    // Sunucudan yanıt alındığında yapılacak işlemler
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // İşlem başarılı mesajını göster ve sayfayı yenile
+        alert("Kategori başarıyla eklendi!");
+        window.location.href = "admin.jsp";
+      }
+    };
+
+    // Verileri gönder
+    xhr.send("kategoriAdi=" + encodeURIComponent(kategoriAdi));
+  });
+</script>
+  
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

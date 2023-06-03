@@ -17,7 +17,7 @@
   <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand mx-4" href="#home">YokYok</a>
+        <a class="navbar-brand mx-4" href="index.jsp">YokYok</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -29,16 +29,16 @@
         <div class="collapse navbar-collapse" id="mynavbar">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item mx-2">
-              <a class="nav-link" href="#home">Anasayfa</a>
+              <a class="nav-link" href="index.jsp">Anasayfa</a>
             </li>
             <li class="nav-item me-2">
-              <a class="nav-link" href="#">Sepet ( )</a>
+              <a class="nav-link" href="cart.jsp">Sepet ( )</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Üye Ol</a>
+              <a class="nav-link" href="register.jsp">Üye Ol</a>
             </li>
             <li class="nav-item me-4">
-              <a class="nav-link" href="#">Giriş Yap</a>
+              <a class="nav-link" href="login.jsp">Giriş Yap</a>
             </li>
           </ul>
         </div>
@@ -58,7 +58,7 @@
                     <div class="row">
                       <div class="col-lg-12">
                         <h5 class="mb-3">
-                          <a href="#!" class="text-body"
+                          <a href="index.jsp" class="text-body"
                             ><i class="fas fa-long-arrow-alt-left me-2"></i
                             >Alışverişe Devam</a
                           >
@@ -234,7 +234,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="text-center"><button type="submit" class="btn btn-success">Satın Al</button></div>
+                    <div class="text-center"><button type="submit" class="btn btn-success" onclick="purchase()">Satın Al</button></div>
                   </div>
                 </div>
               </div>
@@ -251,5 +251,10 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function purchase() {
+        alert('Alışveriş tamamlandı!');
+      }
+    </script>
   </body>
 </html>

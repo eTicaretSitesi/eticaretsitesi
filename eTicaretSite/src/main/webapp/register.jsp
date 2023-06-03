@@ -57,7 +57,7 @@
           <div class="col-md-12">
             <div class="register-container">
               <h3 class="text-center mb-4">Üye Ol</h3>
-              <form>
+              <form action="Register" method="post">
                 <div class="mb-3">
                   <label for="firstName" class="form-label">Ad</label>
                   <input type="text" class="form-control" id="firstName" required>

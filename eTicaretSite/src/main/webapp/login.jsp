@@ -57,14 +57,14 @@
           <div class="col-md-12">
             <div class="login-container">
               <h3 class="text-center mb-4">Giriş Yap</h3>
-              <form id="login-form">
+              <form id="login-form" action="LoginServlet">
                 <div class="mb-3">
                   <label for="email" class="form-label">E-posta</label>
-                  <input type="email" class="form-control" id="email" required>
+                  <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Şifre</label>
-                  <input type="password" class="form-control" id="password" required>
+                  <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="remember">
@@ -83,23 +83,7 @@
 
   <!-- Bitiş -->
 
-  <script>
-    document.getElementById("login-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Formun varsayılan davranışını engelle
-      
-      // Kullanıcı giriş bilgilerini al
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
-      
-      // Kontrol etme işlemlerini yap
-      if (email === "sa@as.com" && password === "123") {
-        // Yönlendirme işlemi
-        window.location.href = "/admin.html";
-      } else {
-        alert("Hatalı giriş bilgileri!"); // Hatalı giriş durumunda bir uyarı göster
-      }
-    });
-  </script>
+   
   
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

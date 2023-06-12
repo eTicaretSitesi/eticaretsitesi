@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +31,7 @@
     <!-- Navbar Başlangıç -->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand mx-4" href="#home">YokYok</a>
+          <a class="navbar-brand mx-4" id="navb" href="#home">YokYok</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -60,174 +60,128 @@
   <section class="home py-5" id="home">
     <div class="container">
         <div class="row">
+        
           <div class="col-md-3">
-            <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Telefon
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    Xiaomi
-                  </div>
-                  <div class="accordion-body">
-                    Samsung
-                  </div>
-                  <div class="accordion-body">
-                    Apple
-                  </div>
+    <div class="accordion" id="accordionExample">
+        <% 
+            try {
+                // Veritabanı bağlantısı için gerekli bilgiler
+                String url = "jdbc:mysql://localhost:3306/eticaret";
+                String username = "root";
+                String password = "serce";
+
+                // Veritabanına bağlan
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, username, password);
+
+                // Kategorileri veritabanından al
+                String categoryQuery = "SELECT id, kategori_adi FROM kategoriler";
+                Statement categoryStatement = connection.createStatement();
+                ResultSet categoryResultSet = categoryStatement.executeQuery(categoryQuery);
+
+                // Her bir kategori için akordiyon öğesi oluştur
+                while (categoryResultSet.next()) {
+                    int kategoriId = categoryResultSet.getInt("id");
+                    String kategoriAdi = categoryResultSet.getString("kategori_adi");
+        %>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading<%= kategoriId %>">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= kategoriId %>" aria-expanded="false" aria-controls="collapse<%= kategoriId %>" data-kategoriid="<%= kategoriId %>">
+                    <%= kategoriAdi %>
+                </button>
+            </h2>
+            <div id="collapse<%= kategoriId %>" class="accordion-collapse collapse" aria-labelledby="heading<%= kategoriId %>" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <% 
+                        // Ürünleri veritabanından al
+                        String productQuery = "SELECT urun_adi FROM urunler WHERE kategori_id = " + kategoriId;
+                        Statement productStatement = connection.createStatement();
+                        ResultSet productResultSet = productStatement.executeQuery(productQuery);
+
+                        // Her bir ürün için içerik oluştur
+                        while (productResultSet.next()) {
+                            String urunAdi = productResultSet.getString("urun_adi");
+                    %>
+                    <div class="accordion-body">
+                        <a href="#" class="text-decoration-none text-white"><%= urunAdi %></a>
+                    </div>
+                    <% 
+                        }
+
+                        // Ürünlerin sonuç kümesini kapat
+                        productResultSet.close();
+                        productStatement.close();
+                    %>
                 </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Televizyon
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    Sony
-                  </div>
-                  <div class="accordion-body">
-                    Vestel
-                  </div>
-                  <div class="accordion-body">
-                    Samsung
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
+        <% 
+                }
+
+                // Veritabanı bağlantısını kapat
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
+    </div>
+</div>
+
     
           <div class="col-md-9">
             <div class="row">
 
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-                <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-                  <div class="d-flex">
-                    <div class="toast-body">
-                      Ürün sepete eklendi!
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                  </div>
-                </div>
-              </div>
+              <div class="col-md-12" id="productContainer">
+    <!-- Ürün kartlarını veritabanından al ve oluştur -->
+    <div class="row" id="productContainer2">
+        <%
+            try {
+                // Veritabanı bağlantısı için gerekli bilgiler
+                String url = "jdbc:mysql://localhost:3306/eticaret";
+                String username = "root";
+                String password = "serce";
 
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
+                // Veritabanına bağlan
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection connection = DriverManager.getConnection(url, username, password);
 
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
+                // Ürünleri veritabanından al
+                String query = "SELECT urun_adi, aciklama, fiyat, stok_miktari FROM urunler";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(query);
 
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
+                // Her bir ürün için kart oluştur
+                while (resultSet.next()) {
+                    String urunAdi = resultSet.getString("urun_adi");
+                    String aciklama = resultSet.getString("aciklama");
+                    double fiyat = resultSet.getDouble("fiyat");
+                    int stokMiktari = resultSet.getInt("stok_miktari");
+        %>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="img/nope.svg" alt="Ürün Fotoğrafı" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title"><%= urunAdi %></h5>
+                    <p class="card-text"><%= aciklama %></p>
+                    <p class="card-text">Fiyat: <%= fiyat %> TL</p>
+                    <p class="card-text">Stok Miktarı: <%= stokMiktari %></p>
+                    <button class="btn btn-success">Sepete Ekle</button>
                 </div>
-              </div>
+            </div>
+        </div>
+        <%
+                }
 
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
+                // Veritabanı bağlantısını kapat
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
+    </div>
+</div>
 
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/tel.png" class="card-img-top" alt="Ürün 1">
-                  <div class="card-body">
-                    <h5 class="card-title">Xiaomi Telefon</h5>
-                    <p class="card-text">Xiaomi markadır.</p>
-                    <p class="card-text">Fiyat: 8000 TL</p>
-                    <p class="card-text">Stok: 10</p>
-                    <button class="btn btn-success" onclick="addToCart()">Sepete Ekle</button>
-                  </div>
-                </div>
-              </div>
+            
 
             </div>
           </div>
@@ -236,12 +190,59 @@
   </section>
 
   <!-- Anasayfa Bitiş -->
-
+  
   <script>
-    function addToCart() {
-      alert("Ürün sepete eklendi."); // Kullanıcıya mesajı göster
-    }
-  </script>
+  // Akordiyon butonlarına click event listener ekleme
+  const accordionButtons = document.querySelectorAll('.accordion-button');
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const kategoriId = button.dataset.kategoriid;
+      loadProductsByCategory(kategoriId);
+    });
+  });
+
+  // Seçilen kategoriye göre ürünleri yükleme
+  function loadProductsByCategory(kategoriId) {
+    const productContainer = document.getElementById('productContainer2');
+
+    // AJAX ile ürünleri veritabanından al
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'getProducts.jsp?kategoriId=' + kategoriId, true);
+    xhr.onload = function() {
+      if (this.status === 200) {
+        productContainer.innerHTML = this.responseText;
+      }
+    };
+    xhr.send();
+  }
+  
+//Tüm ürünleri yükleme
+  function loadAllProducts() {
+    const productContainer = document.getElementById('productContainer2');
+
+    // AJAX ile tüm ürünleri veritabanından al
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'getAllProducts.jsp', true);
+    xhr.onload = function() {
+      if (this.status === 200) {
+        productContainer.innerHTML = this.responseText;
+      }
+    };
+    xhr.send();
+  }
+
+  // Anasayfa butonuna click event listener ekleme
+  const homeButton = document.querySelector('.nav-link[href="#home"]');
+  homeButton.addEventListener('click', function() {
+    loadAllProducts();
+  });
+  
+  const iconButton = document.querySelector('.navbar-brand[href="#home"]');
+  iconButton.addEventListener('click', function() {
+    loadAllProducts();
+  });
+</script>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

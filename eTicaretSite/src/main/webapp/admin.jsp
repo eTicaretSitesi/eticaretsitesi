@@ -1,5 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+
+<!-- --------------------------------- -->
+<%
+// Veritabanı bağlantısı için gerekli bilgiler
+String url = "jdbc:mysql://localhost:3306/eticaret";
+String username = "root";
+String password = "serce";
+
+// Veritabanına bağlantı oluştur
+Connection connection = null;
+Statement statement = null;
+ResultSet resultSet = null;
+try {
+    Class.forName("com.mysql.jdbc.Driver");
+    connection = DriverManager.getConnection(url, username, password);
+
+    // Kullanıcı sayısını çekmek için sorgu
+    statement = connection.createStatement();
+    resultSet = statement.executeQuery("SELECT COUNT(*) AS kullanici_sayisi FROM kullanicilar");
+    int userCount = 0;
+    if (resultSet.next()) {
+        userCount = resultSet.getInt("kullanici_sayisi");
+    }
+    resultSet.close(); // resultSet'ı kapat
+
+    // Kategori sayısını çekmek için sorgu
+    resultSet = statement.executeQuery("SELECT COUNT(*) AS kategori_sayisi FROM kategoriler");
+    int categoryCount = 0;
+    if (resultSet.next()) {
+        categoryCount = resultSet.getInt("kategori_sayisi");
+    }
+    resultSet.close(); // resultSet'ı kapat
+
+    // Ürün sayısını çekmek için sorgu
+    resultSet = statement.executeQuery("SELECT COUNT(*) AS urun_sayisi FROM urunler");
+    int productCount = 0;
+    if (resultSet.next()) {
+        productCount = resultSet.getInt("urun_sayisi");
+    }
+
+    // JSP sayfasında değerleri kullanmak üzere değişkenlere atanır
+    request.setAttribute("userCount", userCount);
+    request.setAttribute("categoryCount", categoryCount);
+    request.setAttribute("productCount", productCount);
+} catch (ClassNotFoundException e) {
+    e.printStackTrace();
+} catch (SQLException e) {
+    e.printStackTrace();
+} finally {
+    // Kaynakları serbest bırak
+    if (resultSet != null) {
+        try {
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    if (statement != null) {
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    if (connection != null) {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+%>
+<!-- ------------------------------------------------------------ -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +122,7 @@
                 <img src="img/users.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Kullanıcı Sayısı</h5>
-                <p class="card-text">100</p>
+                <p class="card-text"><%= request.getAttribute("userCount") %></p>
               </div>
             </div>
           </div>
@@ -55,7 +131,7 @@
                 <img src="img/category.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Kategori Sayısı</h5>
-                <p class="card-text">50</p>
+                <p class="card-text"><%= request.getAttribute("categoryCount") %></p>
               </div>
             </div>
           </div>
@@ -64,7 +140,7 @@
                 <img src="img/product.png" style="width:100px;height:100px" class="card-img-top mx-auto mt-3" alt="Kullanıcı Sayısı">
               <div class="card-body">
                 <h5 class="card-title">Ürün Sayısı</h5>
-                <p class="card-text">200</p>
+                <p class="card-text"><%= request.getAttribute("productCount") %></p>
               </div>
             </div>
           </div>
@@ -128,7 +204,7 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        <form action="UrunEkle" method="post">
+	        <form action="UrunEkle" method="post" enctype="multipart/form-data">
 	          <div class="mb-3">
 	            <label for="urunAdi" class="form-label">Ürün İsmi</label>
 	            <input type="text" class="form-control" id="urunAdi" name="urunAdi" placeholder="Ürün ismini girin">
@@ -147,16 +223,16 @@
 	          </div>
 	          <div class="mb-3">
 	            <label for="kategoriSecimi" class="form-label">Kategori Seçimi</label>
-	            <select class="form-select" id="kategoriSecimi" name="kategoriSecimi"></select>
+	            <input type="number" class="form-control" id="kategoriSecimi" name="kategoriSecimi" placeholder="Kategori seçin.">
 	          </div>
-	          <div class="mb-3">
-	            <label for="fotoYukleme" class="form-label">Fotoğraf Yükleme</label>
-	            <input type="file" class="form-control" id="fotoYukleme" name="fotoYukleme">
-	          </div>
+<!-- 	          <div class="mb-3"> -->
+<!-- 	            <label for="fotoYukleme" class="form-label">Fotoğraf Yükleme</label> -->
+<!-- 	            <input type="file" class="form-control" id="fotoYukleme" name="fotoYukleme"> -->
+<!-- 	          </div> -->
 	        </form>
 	      </div>
 	      <div class="modal-footer">
-	          <button type="button" class="btn btn-success">Ekle</button>
+	          <button type="button" class="btn btn-success" id="urunEkleBtn">Ekle</button>
 	          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
 	      </div>
 	    </div>
@@ -188,7 +264,40 @@
     xhr.send("kategoriAdi=" + encodeURIComponent(kategoriAdi));
   });
 </script>
-  
+
+<script>
+  document.querySelector("#urunModal #urunEkleBtn").addEventListener("click", function() {
+    var urunAdi = document.getElementById("urunAdi").value;
+    var urunAciklamasi = document.getElementById("urunAciklamasi").value;
+    var urunFiyati = document.getElementById("urunFiyati").value;
+    var urunStokMiktari = document.getElementById("urunStokMiktari").value;
+    var kategoriSecimi = document.getElementById("kategoriSecimi").value;
+
+    // AJAX isteği için XMLHttpRequest nesnesi oluştur
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "UrunEkle", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    // Sunucudan yanıt alındığında yapılacak işlemler
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // İşlem başarılı mesajını göster ve sayfayı yenile
+        alert("Ürün başarıyla eklendi!");
+        window.location.href = "admin.jsp";
+      }
+    };
+
+    // Verileri gönder
+    var params = "urunAdi=" + encodeURIComponent(urunAdi) +
+                 "&urunAciklamasi=" + encodeURIComponent(urunAciklamasi) +
+                 "&urunFiyati=" + encodeURIComponent(urunFiyati) +
+                 "&urunStokMiktari=" + encodeURIComponent(urunStokMiktari) +
+                 "&kategoriSecimi=" + encodeURIComponent(kategoriSecimi);
+    xhr.send(params);
+  });
+</script>
+
+
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
